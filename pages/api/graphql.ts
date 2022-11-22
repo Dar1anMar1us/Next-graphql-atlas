@@ -3,6 +3,9 @@ import { MicroRequest } from "apollo-server-micro/dist/types";
 import { ServerResponse, IncomingMessage } from "http";
 import { buildSchema, Resolver, Query, Arg, ObjectType, Field, ID } from "type-graphql";
 import "reflect-metadata";
+import { connectDb } from "../../src/config/db";
+
+connectDb()
 
 @ObjectType()
 export class Client {
