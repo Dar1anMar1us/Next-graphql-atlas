@@ -1,5 +1,7 @@
 query getClients {
     clients {
         name
+        email
+        phone
     }
 }

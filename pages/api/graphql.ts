@@ -8,6 +8,27 @@ import "reflect-metadata";
 export class Client {
     @Field(() => ID)
     name: string | undefined;
+
+    @Field(() => String)
+    email: string | undefined;
+
+    @Field(() => String)
+    phone: string | undefined;
+}
+
+@ObjectType()
+export class Project {
+    @Field(() => ID)
+    name: string | undefined;
+
+    @Field(() => String)
+    description: string | undefined;
+
+    @Field(() => String)
+    status: string | undefined;
+
+    @Field(() => Client)
+    client: Client | undefined
 }
 
 @Resolver(Client)
@@ -15,14 +36,27 @@ export class ClientsResolver {
     @Query(() => [Client])
     clients(): Client[] {
         return [
-            { name: "Darian" },
-            { name: "Chirca" }
+            { name: "Darian", email: "dmc.41155@gmail.com", phone: "654567543" },
+            { name: "Chirca", email: "dmc.41155@gmail.com", phone: "654567543" }
+        ]
+    }
+}
+
+@Resolver(Project)
+export class ProjectsResolver {
+    @Query(() => [Project])
+    projects(): Project[] {
+        return [
+            { name: "Test project", description: "Test description...", status: "active", client: {name: "Darian", email: "dmc.41155@gmail.com", phone: "654567543"} }
         ]
     }
 }
 
 const schema = await buildSchema({
-    resolvers: [ClientsResolver]
+    resolvers: [
+        ClientsResolver,
+        ProjectsResolver
+    ]
 })
 
 const server = new ApolloServer({
